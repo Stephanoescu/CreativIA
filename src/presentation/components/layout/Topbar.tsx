@@ -41,15 +41,6 @@ export function Topbar({ user }: TopbarProps) {
             <span className="text-sm font-medium text-[#f1f3f9] leading-none mb-1">
               {user.fullName}
             </span>
-            <div className="flex items-center gap-2">
-              <span
-                className={`text-[10px] px-2 py-0.5 rounded-full border ${
-                  roleColors[user.role] || roleColors.writer
-                }`}
-              >
-                {roleLabels[user.role] || user.role}
-              </span>
-            </div>
           </div>
         </div>
 
