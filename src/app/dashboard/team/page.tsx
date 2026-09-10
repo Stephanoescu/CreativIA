@@ -70,13 +70,12 @@ export default async function TeamPage() {
         </div>
       </div>
 
-      <div className="glass-card overflow-hidden">
-        <table className="w-full text-left border-collapse">
+      <div className="glass-card overflow-x-auto">
+        <table className="w-full min-w-[500px] text-left border-collapse">
           <thead>
             <tr className="border-b border-[#2e3347] bg-[#1a1d27]/50">
               <th className="px-6 py-4 text-sm font-medium text-[#8b92a9]">Usuario</th>
               <th className="px-6 py-4 text-sm font-medium text-[#8b92a9]">Email</th>
-              <th className="px-6 py-4 text-sm font-medium text-[#8b92a9]">Rol</th>
               <th className="px-6 py-4 text-sm font-medium text-[#8b92a9]">Estado</th>
             </tr>
           </thead>
@@ -99,11 +98,6 @@ export default async function TeamPage() {
                     <Mail className="w-4 h-4" />
                     {member.email}
                   </div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className={`badge border ${roleColors[member.role] || roleColors.writer}`}>
-                    {roleLabels[member.role] || member.role}
-                  </span>
                 </td>
                 <td className="px-6 py-4">
                   <span className="badge bg-[#252836] text-[#8b92a9] border-[#2e3347]">
