@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0f1117;
+  --surface: #1a1d27;
+  --surface-2: #252836;
+  --border: #2e3347;
+  --text-primary: #f1f3f9;
+  --text-secondary: #8b92a9;
+  --brand: #4257f8;
+  --brand-light: #6380fd;
+}
+
+@layer base {
+  * {
+    @apply border-[#2e3347];
+  }
+
+  body {
+    @apply bg-[#0f1117] text-[#f1f3f9] antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[#2e3347] rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#4257f8];
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-[#1a1d27] border border-[#2e3347] rounded-xl;
+  }
+
+  .btn-primary {
+    @apply bg-[#4257f8] hover:bg-[#3346e0] text-white font-medium px-4 py-2 rounded-lg
+           transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-[#252836] hover:bg-[#2e3347] text-[#f1f3f9] font-medium px-4 py-2 rounded-lg
+           border border-[#2e3347] transition-all duration-200 flex items-center gap-2;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-[#252836] text-[#8b92a9] hover:text-[#f1f3f9] px-3 py-2 rounded-lg
+           transition-all duration-200 flex items-center gap-2;
+  }
+
+  .input-field {
+    @apply bg-[#252836] border border-[#2e3347] text-[#f1f3f9] rounded-lg px-3 py-2
+           focus:outline-none focus:border-[#4257f8] focus:ring-1 focus:ring-[#4257f8]
+           placeholder:text-[#8b92a9] transition-all duration-200 w-full;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+}
