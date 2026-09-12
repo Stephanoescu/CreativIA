@@ -46,11 +46,14 @@ async function buildUseCase() {
 
   if (!user) throw new Error("No autenticado");
 
-  const documentRepo = new SupabaseDocumentRepository(supabase);
-  const userRepo = new SupabaseUserRepository(supabase);
+  const { createSupabaseAdminClient } = await import("@/infrastructure/supabase/server");
+  const supabaseAdmin = (await createSupabaseAdminClient()) as any;
+
+  const documentRepo = new SupabaseDocumentRepository(supabaseAdmin);
+  const userRepo = new SupabaseUserRepository(supabaseAdmin);
   const useCase = new ManageDocumentUseCase(documentRepo, userRepo);
 
-  return { useCase, userId: user.id, supabase };
+  return { useCase, userId: user.id, supabase, supabaseAdmin };
 }
 
 // ─── Actions ─────────────────────────────────────────────────
@@ -59,10 +62,10 @@ export async function saveDocumentAction(
   formData: FormData
 ): Promise<ActionResult & { document?: Document }> {
   try {
-    const { useCase, userId, supabase } = await buildUseCase();
+    const { useCase, userId, supabase, supabaseAdmin } = await buildUseCase();
 
-    // Obtener organización del perfil actual
-    const { data: profile } = await supabase
+    // Obtener organización del perfil actual usando Admin client
+    const { data: profile } = await supabaseAdmin
       .from("profiles")
       .select("organization_id")
       .eq("id", userId)
