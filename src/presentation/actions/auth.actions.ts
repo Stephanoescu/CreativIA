@@ -86,17 +86,26 @@ export async function registerAction(
     };
   }
 
-  const supabase = await createSupabaseServerClient();
+  const { createClient } = await import("@supabase/supabase-js");
+  const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    }
+  );
 
-  const { error } = await supabase.auth.signUp({
+  const { error } = await supabaseAdmin.auth.admin.createUser({
     email: validation.data.email,
     password: validation.data.password,
-    options: {
-      data: {
-        full_name: validation.data.fullName,
-        organization_id: validation.data.organizationId,
-        role: validation.data.role,
-      },
+    email_confirm: true,
+    user_metadata: {
+      full_name: validation.data.fullName,
+      organization_id: validation.data.organizationId,
+      role: validation.data.role,
     },
   });
 
