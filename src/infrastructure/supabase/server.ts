@@ -39,30 +39,18 @@ export async function createSupabaseServerClient() {
   );
 }
 
+import { createClient } from "@supabase/supabase-js";
+
 /**
  * Cliente con SERVICE ROLE para operaciones administrativas
  * que requieren bypassear RLS (ej. triggers, admin actions).
  * ⚠️  NUNCA expongas SUPABASE_SERVICE_ROLE_KEY al cliente.
  */
 export async function createSupabaseAdminClient() {
-  const cookieStore = await cookies();
-
-  return createServerClient<Database>(
+  return createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll(cookiesToSet: { name: string; value: string; options?: CookieOptions }[]) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options);
-            });
-          } catch {}
-        },
-      },
       auth: {
         autoRefreshToken: false,
         persistSession: false,
